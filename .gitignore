@@ -1,0 +1,33 @@
+# ignore
+.DS_Store
+*.pyc
+*.bak
+.idea
+.tox
+*.egg-info
+data/
+env
+.env
+node_modules
+npm-debug.log
+app/env
+app/data.sqlite3
+app/logs
+app/media
+app/public/
+app/components
+app/site-static/.sass-cache
+app/site-static/i18n-js
+app/reports
+app/device_data
+app/dev
+app/static/CACHE
+
+# dist built on heroku
+app/site-static/css/*
+app/site-static/js/*
+app/site-static/dist/css/*
+app/site-static/dist/js/*
+
+celerybeat-schedule
+django

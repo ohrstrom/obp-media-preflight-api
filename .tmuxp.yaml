@@ -1,0 +1,14 @@
+session_name: media-preflight-api
+start_directory: ./
+windows:
+
+- window_name: media-preflight-api
+  layout: tiled
+  shell_command_before:
+    - 'source ~/srv/media-preflight-api/bin/activate'
+  panes:
+    - shell_command:
+        - ./app/manage.py runserver 0.0.0.0:8080
+    - cd app
+    - cd app
+    - cd app
