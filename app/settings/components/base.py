@@ -182,7 +182,7 @@ PUBLIC_APP_URL = os.getenv('PUBLIC_APP_URL', 'http://127.0.0.1:8000')
 ##################################################################
 # Remote API (OBP)
 ##################################################################
-REMOTE_API_BASE_URL = os.getenv('REMOTE_API_BASE_URL', 'http://dev.openbroadcast.org')
-REMOTE_API_AUTH_TOKEN = os.getenv('REMOTE_API_AUTH_TOKEN', 'testuser')
+REMOTE_API_BASE_URL = os.getenv('REMOTE_API_BASE_URL', None)
+REMOTE_API_AUTH_TOKEN = os.getenv('REMOTE_API_AUTH_TOKEN', None)
 
 

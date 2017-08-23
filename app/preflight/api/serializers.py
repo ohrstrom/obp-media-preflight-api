@@ -13,7 +13,7 @@ from ..remote import APIClient, API_BASE_URL
 
 class RemoteURIAccepted(object):
     def __call__(self, value):
-        if not value.startswith(API_BASE_URL):
+        if API_BASE_URL and not value.startswith(API_BASE_URL):
             message = 'Invalid URI. Must start with: {}'.format(API_BASE_URL)
             raise serializers.ValidationError(message)
 

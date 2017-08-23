@@ -3,7 +3,7 @@ import requests
 from django.conf import settings
 
 
-API_BASE_URL = getattr(settings, 'REMOTE_API_BASE_URL')
+API_BASE_URL = getattr(settings, 'REMOTE_API_BASE_URL', None)
 AUTH_TOKEN = getattr(settings, 'REMOTE_API_AUTH_TOKEN', None)
 
 class APIClient(object):
