@@ -32,7 +32,7 @@ include(
     optional(os.path.join(APP_ROOT, 'local_settings.py')),
 
     # via server based settings in etc (placed by ansible deployment tasks)
-    optional('/etc/fprint-api/application-settings.py'),
-    optional('/etc/fprint-api/logging.py'),
+    optional('/etc/preflight-api/application-settings.py'),
+    optional('/etc/preflight-api/logging.py'),
     scope=locals()
 )
