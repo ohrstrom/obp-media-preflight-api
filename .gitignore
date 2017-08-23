@@ -23,6 +23,8 @@ app/device_data
 app/dev
 app/static/CACHE
 
+*/local_settings.py
+
 # dist built on heroku
 app/site-static/css/*
 app/site-static/js/*
