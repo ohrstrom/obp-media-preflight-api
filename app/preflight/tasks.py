@@ -1,10 +1,11 @@
 from __future__ import absolute_import
 
 import logging
+import json
 import time
+import tenacity
 
 from celery import shared_task
-from django.core.files import File
 
 from .remote import APIClient
 from .runner import PreflightRunner
@@ -32,6 +33,7 @@ def preflight_check_task(obj):
     print(preflight_result)
     print('*************************')
 
+    time.sleep(1.0)
 
 
     # r = Renderer()
@@ -60,17 +62,13 @@ def preflight_check_task(obj):
     # r.cleanup()
 
 
-    print('pre-sleep')
-    time.sleep(0.1)
     obj.status = obj.STATUS_DONE
-    print('post-sleep')
-
 
     obj.task_id = None
     obj.save()
 
     # inform remote api
-    #url = '{}{}'.format(obj.remote_uri, 'mixdown-complete/')
-    #r = APIClient().post(url, data=[])
-
-    # print(r.status_code)
+    url = obj.remote_uri
+    r = APIClient().patch(url, json={'status': 2, 'result': json.dumps(preflight_result)})
+    print(r.status_code)
+    print(r.text)

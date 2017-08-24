@@ -10,6 +10,7 @@ dj-database-url==0.4.1
 whitenoise==3.2
 psycopg2
 django_redis
+tenacity==4.4.0
 
 #
 uwsgi
