@@ -72,3 +72,49 @@ def preflight_check_task(obj):
     r = APIClient().patch(url, json={'status': 2, 'result': json.dumps(preflight_result)})
     print(r.status_code)
     print(r.text)
+
+
+
+
+
+"""
+# The input file,
+# any format supported by liquidsoap
+input = "/tmp/input.mp3"
+
+# The output file
+output = "/tmp/output.ogg"
+
+# A source that plays the file once
+source = once(single(input))
+
+# We use a clock with disabled synchronization
+clock.assign_new(sync=false,[source])
+
+# Finally, we output the source to an
+# ogg/vorbis file
+output.file(%vorbis, output,fallible=true,
+                     on_stop=shutdown,source)
+"""
+
+
+
+"""
+input = "/data/preflight-api/media/preflight/0788444f-0048-4257-8975-4c8c86fa6692/418468.m4a"
+output = "/tmp/output.ogg"
+source = once(single(input))
+clock.assign_new(sync=false,[source])
+output.file(%vorbis, output, fallible=true, on_stop=shutdown, source)
+"""
+
+
+
+"""
+set("log.stdout",true)
+set("log.file",false)
+input = "/data/preflight-api/media/preflight/0788444f-0048-4257-8975-4c8c86fa6692/418468.m4a"
+output = "/tmp/output.ogg"
+source = once(single(input))
+clock.assign_new(sync=false,[source])
+output.file(%vorbis, output, fallible=true, on_stop=shutdown, source)
+"""

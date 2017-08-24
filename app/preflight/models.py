@@ -105,11 +105,11 @@ def check_post_save(sender, instance, **kwargs):
             log.info('task {} running - need to terminate.'.format(instance.task_id))
             revoke(instance.task_id, terminate=True, signal='SIGKILL')
 
-        celery_task = preflight_check_task.apply_async((instance,))
-        Check.objects.filter(pk=instance.pk).update(task_id=celery_task.id)
+        #celery_task = preflight_check_task.apply_async((instance,))
+        #Check.objects.filter(pk=instance.pk).update(task_id=celery_task.id)
 
         # just for debuging - the non-async version
-        #preflight_check_task(instance)
+        preflight_check_task(instance)
 
 
 @receiver(post_delete, sender=Check)
