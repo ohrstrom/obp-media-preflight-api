@@ -77,6 +77,10 @@ class PreflightRunner(object):
         process = subprocess.Popen(command, stdout=subprocess.PIPE)
         process.wait()
 
+        checks.append({
+            'return_code': process.returncode
+        })
+
 
         self.errors += errors
         self.checks += checks
