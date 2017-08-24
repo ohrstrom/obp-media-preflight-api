@@ -157,6 +157,16 @@ SETTINGS_EXPORT = [
     'PUBLIC_APP_URL',
 ]
 
+
+##################################################################
+# celery / queue
+##################################################################
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+
+
 ##################################################################
 # API
 ##################################################################
