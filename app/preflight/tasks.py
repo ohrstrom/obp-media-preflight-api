@@ -73,7 +73,7 @@ def preflight_check_task(obj):
     print(r.text)
 
     print('check done - delete object')
-    #obj.delete()
+    obj.delete()
 
 
 

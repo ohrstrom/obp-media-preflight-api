@@ -49,8 +49,8 @@ class PreflightRunner(object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         if os.path.isdir(self.working_dir):
-            print(self.working_dir)
-            #shutil.rmtree(self.working_dir)
+            #print(self.working_dir)
+            shutil.rmtree(self.working_dir)
 
     def ls_decode(self):
 
