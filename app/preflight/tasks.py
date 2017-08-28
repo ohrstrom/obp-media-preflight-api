@@ -28,14 +28,6 @@ def preflight_check_task(obj):
 
     preflight_result = r.run()
 
-
-    print('*************************')
-    print(preflight_result)
-    print('*************************')
-
-    time.sleep(1.0)
-
-
     # r = Renderer()
     #
     # obj._skip_content_hash_check = True
@@ -62,16 +54,26 @@ def preflight_check_task(obj):
     # r.cleanup()
 
 
-    obj.status = obj.STATUS_DONE
+    if preflight_result['errors']:
+        obj.status = obj.STATUS_ERROR
+    else:
+        obj.status = obj.STATUS_DONE
+
 
     obj.task_id = None
     obj.save()
 
     # inform remote api
     url = obj.remote_uri
-    r = APIClient().patch(url, json={'status': 2, 'result': json.dumps(preflight_result)})
+    r = APIClient().patch(
+        url,
+        json={'result': json.dumps(preflight_result)}
+    )
     print(r.status_code)
     print(r.text)
+
+    print('check done - delete object')
+    #obj.delete()
 
 
 

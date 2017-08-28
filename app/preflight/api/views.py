@@ -57,7 +57,7 @@ class CheckViewSet(mixins.CreateModelMixin,
     def perform_update(self, serializer):
 
         media_file_obj = self.request.data['media_file']
-        serializer.save(media_file=media_file_obj)
+        serializer.save(media_file=media_file_obj, status=Check.STATUS_INIT)
         media_file_obj.close()
 
 

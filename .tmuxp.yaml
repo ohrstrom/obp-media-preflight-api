@@ -8,7 +8,8 @@ windows:
     - 'source ~/srv/media-preflight-api/bin/activate'
   panes:
     - shell_command:
-        - ./app/manage.py runserver 0.0.0.0:8080
-    - cd app
+        - ./manage.py runserver 0.0.0.0:7779
+    - shell_command:
+        - celery -A app worker -c 2 -l debug
     - cd app
     - cd app

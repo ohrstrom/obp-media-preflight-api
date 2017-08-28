@@ -12,12 +12,14 @@ from django.db import models
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 from celery.task.control import revoke
 
 from base.storage import OverwriteFileSystemStorage
-
-
 from .tasks import preflight_check_task
+
+
+RUN_ASYNC = getattr(settings, 'PREFLIGHT_RUN_ASYNC', False)
 
 log = logging.getLogger(__name__)
 
@@ -105,11 +107,13 @@ def check_post_save(sender, instance, **kwargs):
             log.info('task {} running - need to terminate.'.format(instance.task_id))
             revoke(instance.task_id, terminate=True, signal='SIGKILL')
 
-        #celery_task = preflight_check_task.apply_async((instance,))
-        #Check.objects.filter(pk=instance.pk).update(task_id=celery_task.id)
+        if RUN_ASYNC:
+            celery_task = preflight_check_task.apply_async((instance,))
+            Check.objects.filter(pk=instance.pk).update(task_id=celery_task.id)
 
-        # just for debuging - the non-async version
-        preflight_check_task(instance)
+        else:
+            # just for debuging - the non-async version
+            preflight_check_task(instance)
 
 
 @receiver(post_delete, sender=Check)

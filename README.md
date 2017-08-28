@@ -15,3 +15,35 @@ Work In Progress...
 ### Run as uWSGI Service
 
     uwsgi --http :8080 --module app.wsgi --virtualenv ~/srv/media-preflight-api
+
+
+
+
+## Install Liquidsoap
+
+### OSX / OPAM
+
+#### Install OPAM with Homebreew
+
+    brew install opam
+    opam init
+    
+    # NOTE! restart shell or
+    source ~/.ocamlinit
+    
+#### Install OPAM Packages
+
+    opam install taglib mad lame vorbis cry
+    
+    
+    
+#### Checkout & Build Liquidsoap
+
+
+    git clone https://github.com/savonet/liquidsoap.git
+    cd liquidsoap
+    git checkout tags/1.3.1
+    git submodule init
+    git submodule update
+    
+    opam pin add liquidsoap .
