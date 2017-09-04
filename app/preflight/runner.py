@@ -40,8 +40,8 @@ class PreflightRunner(object):
         self.working_dir = tempfile.mkdtemp()
         self.path = path
 
-        self.checks = []
-        self.errors = []
+        self.checks = {}
+        self.errors = {}
 
 
         print(self.working_dir)
@@ -53,9 +53,6 @@ class PreflightRunner(object):
             shutil.rmtree(self.working_dir)
 
     def ls_decode(self):
-
-        checks = []
-        errors = []
 
         script_path = os.path.join(self.working_dir, 'ls_decode.liq')
         out_path = os.path.join(self.working_dir, 'out.wav')
@@ -95,16 +92,12 @@ class PreflightRunner(object):
             if '[decoder:' in line and 'Method' in line:
                 msg = 'Method {}'.format(line.split('Method ')[1])
                 log.info(msg)
-                checks.append({
-                    'decode': 'ok',
-                })
+                self.checks['decode'] = 'ok'
 
             if '[decoder:' in line and 'Unable to decode ' in line:
                 msg = 'Unable to decode {}'.format(line.split('Unable to decode')[1])
                 log.warning(msg)
-                errors.append({
-                    'decode': msg,
-                })
+                self.errors['decode'] = msg
 
 
         ###############################################################
@@ -113,18 +106,11 @@ class PreflightRunner(object):
         if os.path.isfile(out_path):
             print('file exists')
             log.info('output file exists at expected path')
-            checks.append({
-                'out_file': 'file exists',
-            })
-
-
-
+            self.checks['out_file'] = 'ok'
 
         else:
             log.warning('error reading output file')
-            errors.append({
-                'out_file': 'error reading file',
-            })
+            self.errors['out_file'] = 'error reading file'
 
 
         ###############################################################
@@ -153,18 +139,11 @@ class PreflightRunner(object):
 
             duration = float(ffprobe_duration_result.strip())
             log.info('duration by ffprobe: {}'.format(duration))
-            checks.append({
-                'duration_preflight': duration,
-            })
+            self.checks['duration_preflight'] = duration
 
         except Exception as e:
             log.warning('unable to read duration')
-            errors.append({
-                'duration_preflight': 'error reading duration',
-            })
-
-        self.errors += errors
-        self.checks += checks
+            self.errors['duration_preflight'] = 'error reading duration'
 
 
     def run(self):
