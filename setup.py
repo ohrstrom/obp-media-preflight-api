@@ -6,7 +6,6 @@ import sys
 from setuptools import setup
 from pip.req import parse_requirements
 
-# allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
@@ -15,11 +14,8 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 with open('requirements.txt') as requirements:
     REQUIRES = requirements.read().splitlines()
 
-
 install_reqs = parse_requirements('./requirements.txt', session='hack')
 reqs = [str(ir.req) for ir in install_reqs]
-
-
 
 setup(
     name='Media Preflight API',

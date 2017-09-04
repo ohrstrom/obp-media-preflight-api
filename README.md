@@ -18,6 +18,12 @@ Work In Progress...
 
 
 
+### Create Service/API Account
+
+    ./manage.py api_extra_cli create_service_user -e <email-address> # optional --token/-t
+
+
+
 
 ## Install Liquidsoap
 

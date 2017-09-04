@@ -12,7 +12,7 @@ class APIStatusView(APIView):
     exposes status & version information.
     version corresponds to the global app version.
     """
-    authentication_classes = []
+    # authentication_classes = []
 
     def get(self, request, format=None):
 

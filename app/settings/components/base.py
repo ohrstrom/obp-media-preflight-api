@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
-import posixpath
 import dj_database_url
 
 
-#SECRET_KEY = env('SECRET_KEY')
-SECRET_KEY = '--change-me--'
+
 DEBUG = False
+SECRET_KEY = os.getenv('SECRET_KEY', '--change-me--')
 
 FILER_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*',]
