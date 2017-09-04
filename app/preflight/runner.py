@@ -47,9 +47,9 @@ class PreflightRunner(object):
         print(self.working_dir)
 
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def cleanup(self):
         if os.path.isdir(self.working_dir):
-            #print(self.working_dir)
+            log.debug('cleanup working dir: {}'.format(self.working_dir))
             shutil.rmtree(self.working_dir)
 
     def ls_decode(self):
@@ -170,5 +170,7 @@ class PreflightRunner(object):
     def run(self):
 
         self.ls_decode()
+
+        self.cleanup()
 
         return {'checks': self.checks, 'errors': self.errors}
