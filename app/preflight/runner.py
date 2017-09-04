@@ -154,13 +154,13 @@ class PreflightRunner(object):
             duration = float(ffprobe_duration_result.strip())
             log.info('duration by ffprobe: {}'.format(duration))
             checks.append({
-                'duration': duration,
+                'duration_preflight': duration,
             })
 
         except Exception as e:
             log.warning('unable to read duration')
             errors.append({
-                'duration': 'error reading duration',
+                'duration_preflight': 'error reading duration',
             })
 
         self.errors += errors
