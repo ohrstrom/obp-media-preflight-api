@@ -119,6 +119,11 @@ def check_post_save(sender, instance, **kwargs):
 @receiver(post_delete, sender=Check)
 def check_post_delete(sender, instance, **kwargs):
 
+    # check for running task - terminate if found
+    if instance.task_id:
+        log.info('task {} running - need to terminate.'.format(instance.task_id))
+        revoke(instance.task_id, terminate=True, signal='SIGKILL')
+
     if instance.media_file:
         if os.path.isfile(instance.media_file.path):
             os.remove(instance.media_file.path)

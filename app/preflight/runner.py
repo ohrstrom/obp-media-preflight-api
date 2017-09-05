@@ -81,23 +81,37 @@ class PreflightRunner(object):
 
         log.debug('running: {}'.format(' '.join(ls_decode_command)))
 
-        ls_decode_result = subprocess.check_output(
-            ls_decode_command,
-            stderr=subprocess.STDOUT,
-            universal_newlines=True
-        )
+        # ls_decode_result = subprocess.check_output(
+        #     ls_decode_command,
+        #     stderr=subprocess.STDOUT,
+        #     universal_newlines=True
+        # )
 
-        for line in str(ls_decode_result).split('\n'):
+        try:
+            ls_decode_result = subprocess.check_output(
+                ls_decode_command,
+                stderr=subprocess.STDOUT,
+                universal_newlines=True,
+                timeout=180
+            )
 
-            if '[decoder:' in line and 'Method' in line:
-                msg = 'Method {}'.format(line.split('Method ')[1])
-                log.info(msg)
-                self.checks['decode'] = 'ok'
+        except subprocess.TimeoutExpired as e:
+            ls_decode_result = None
+            self.errors['decode'] = 'timeout while decoding'
 
-            if '[decoder:' in line and 'Unable to decode ' in line:
-                msg = 'Unable to decode {}'.format(line.split('Unable to decode')[1])
-                log.warning(msg)
-                self.errors['decode'] = msg
+        if ls_decode_result:
+
+            for line in str(ls_decode_result).split('\n'):
+
+                if '[decoder:' in line and 'Method' in line:
+                    msg = 'Method {}'.format(line.split('Method ')[1])
+                    log.info(msg)
+                    self.checks['decode'] = 'ok'
+
+                if '[decoder:' in line and 'Unable to decode ' in line:
+                    msg = 'Unable to decode {}'.format(line.split('Unable to decode')[1])
+                    log.warning(msg)
+                    self.errors['decode'] = msg
 
 
         ###############################################################
