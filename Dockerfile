@@ -26,6 +26,9 @@ RUN mkdir /code/
 WORKDIR /code/
 ADD . /code/
 
+COPY docker-entrypoint.sh /code/
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 # uWSGI will listen on this port
 EXPOSE 8000
 
