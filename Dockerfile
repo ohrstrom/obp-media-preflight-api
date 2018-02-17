@@ -16,30 +16,25 @@ RUN set -ex \
         ffmpeg \
         lame \
         flac \
-    && python3.6 -m venv /venv \
-    && /venv/bin/pip install -U pip \
-    && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c "/venv/bin/pip install --no-cache-dir -r /requirements.txt" \
+    && pip install -U pip \
+    && LIBRARY_PATH=/lib:/usr/lib /bin/sh -c 'pip install --no-cache-dir -r /requirements.txt' \
     && apk del .build-deps
 
 # Copy your application code to the container (make sure you create a .dockerignore file if any large files or directories should be excluded)
-RUN mkdir /code/
-WORKDIR /code/
-ADD . /code/
+RUN mkdir /app/
+WORKDIR /app/
+ADD . /app/
 
-COPY docker-entrypoint.sh /code/
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY docker-entrypoint.sh /app/
 
-# uWSGI will listen on this port
+
+# wsgi port
 EXPOSE 8000
 
 # Add any custom, static environment variables needed by Django or your settings file here:
 ENV DJANGO_SETTINGS_MODULE=app.settings
 
-# uWSGI configuration (customize as needed):
-ENV UWSGI_VIRTUALENV=/venv UWSGI_WSGI_FILE=app/wsgi.py UWSGI_HTTP=:8000 UWSGI_MASTER=1 UWSGI_WORKERS=2 UWSGI_THREADS=8 UWSGI_UID=1000 UWSGI_GID=2000 UWSGI_LAZY_APPS=1 UWSGI_WSGI_ENV_BEHAVIOR=holy
-
 # entrypoint (contains migration/static handling)
-ENTRYPOINT ["/code/docker-entrypoint.sh"]
-# Start uWSGI
-CMD ["/venv/bin/uwsgi", "--http-auto-chunked", "--http-keepalive"]
-#CMD /venv/bin/uwsgi --http :$UWSGI_HTTP --module app.wsgi --virtualenv ~/srv/fprint-api
+# ENTRYPOINT ['/app/docker-entrypoint.sh']
+
+CMD ['gunicorn', 'app.wsgi', '--bind 0.0.0.0:$PORT']
