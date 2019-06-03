@@ -54,7 +54,7 @@ def preflight_check_task(obj):
 
     else:
         log.debug('check done - delete instance')
-        # obj.delete()
+        obj.delete()
 
 
 
