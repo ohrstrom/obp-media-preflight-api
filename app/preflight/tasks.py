@@ -36,6 +36,7 @@ def preflight_check_task(obj):
     url = obj.remote_uri
 
     log.debug('updating remote resource: {}'.format(url))
+    log.debug('payload: {}'.format(preflight_result))
 
     r = APIClient().patch(
         url,
@@ -45,8 +46,15 @@ def preflight_check_task(obj):
     log.debug('API response status code: {}'.format(r.status_code))
     log.debug('API response text: {}'.format(r.text))
 
-    log.debug('check done - delete instance')
-    obj.delete()
+    if r.status_code != 200:
+        log.error('unable to update preflight check - status code: {}'.format(r.status_code))
+        log.warning('API response text: {}'.format(r.text))
+        obj.status = obj.STATUS_ERROR
+        obj.save()
+
+    else:
+        log.debug('check done - delete instance')
+        # obj.delete()
 
 
 
