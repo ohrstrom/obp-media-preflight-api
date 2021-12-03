@@ -1,7 +1,7 @@
 ##################################################################
 # core python modules
 ##################################################################
-Django==1.11.1
+Django==2.2.24
 
 ##################################################################
 # heroku hosting
@@ -15,7 +15,7 @@ tenacity==4.4.0
 #
 uwsgi
 gunicorn
-django-cors-headers==2.1.0
+django-cors-headers==3.0.0
 
 ##################################################################
 # django modules
@@ -30,7 +30,7 @@ django-split-settings==0.2.3
 # RESTful API
 # http://www.django-rest-framework.org/#installation
 ##################################################################
-djangorestframework==3.6.3
+djangorestframework==3.11.2
 markdown==2.6.7
 coreapi==2.1.1
 
