@@ -53,3 +53,4 @@ raven==6.0.0
 # external modules & patches
 ##################################################################
 -e git+https://github.com/palmbeach-interactive/django-slick-admin@master#egg=django-slick-admin
+celery>=5.2.2 # not directly required, pinned by Snyk to avoid a vulnerability
